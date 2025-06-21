@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 )
 
@@ -15,21 +16,7 @@ import (
 func displayUsage() {
     // Get the last component of the pathname stored in os.Args[0].  Handle both Windows and
     // Unix-like pathnames.
-    basename := os.Args[0]
-
-    // Find the character index of the rightmost slash or backslash in basename.
-    lastSlash := -1
-    for i := len(basename) - 1; i >= 0; i-- {
-        if basename[i] == '\\' || basename[i] == '/' {
-            lastSlash = i
-            break
-        }
-    }
-
-    // If a slash or blackslash was found, slice the string to get the basename.
-    if lastSlash != -1 {
-        basename = basename[lastSlash+1:]
-    }
+    basename := filepath.Base(os.Args[0])
 
 	fmt.Fprintf(os.Stderr, "Usage: %s USERNAME POSTCOUNT\n\n", basename)
 	fmt.Fprintf(os.Stderr, "USERNAME   ->  BlueSky username (e.g., user.bsky.social).\n")
